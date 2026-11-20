@@ -71,7 +71,7 @@ dialog textarea{min-height:120px;resize:vertical}
 <body>
 <header>
   <h1>🎧 مساعد المبيعات</h1>
-  <span class="pill" id="st">🟢 متاح</span><span class="pill" id="cn"></span><span class="pill" id="ver">v1.4</span>
+  <span class="pill" id="st">🟢 متاح</span><span class="pill" id="cn"></span><span class="pill" id="ver">v1.6</span>
   <button class="ib" id="setb" aria-label="الإعدادات">⚙️</button>
 </header>
 
@@ -103,10 +103,10 @@ dialog textarea{min-height:120px;resize:vertical}
   <label for="prov">مزود الذكاء الاصطناعي</label>
   <select id="prov" style="width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:9px"><option value="claude">Claude (بيتدفع حسب الاستخدام)</option><option value="gemini">Gemini (فيه خطة مجانية)</option></select>
   <label for="key">مفتاح الـ API (بيتحفظ على جهازك بس)</label><input id="key" type="password" autocomplete="off" placeholder="الصق المفتاح هنا">
-  <div id="gmw"><label for="gm">اسم نموذج Gemini</label><input id="gm"></div>
+  <div id="gmw"><label for="gm">نموذج Gemini</label><select id="gm" style="width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:9px"><option value="gemini-3.5-flash-lite">⚡ 3.5 Flash-Lite (الأسرع، موصى به للمكالمات)</option><option value="gemini-3.8-flash">🧠 3.8 Flash (أذكى وأبطأ)</option><option value="gemini-3.6-flash">3.6 Flash (وسط)</option><option value="gemini-2.5-flash-lite">2.5 Flash-Lite (احتياطي)</option></select></div>
   <div class="note" id="kn" style="margin-top:6px"></div>
   <div class="note" style="margin-top:8px">المفتاح وكل الإعدادات محفوظة على جهازك بس، وما بتتبعتش غير لمزود الذكاء الاصطناعي اللي اخترته. ما تكتبش أسماء عملاء، وخد موافقة الشركة قبل الاستخدام مع عملاء حقيقيين.</div>
-  <div class="note" style="margin-top:8px;text-align:center">رقم الإصدار: 1.4</div>
+  <div class="note" style="margin-top:8px;text-align:center">رقم الإصدار: 1.6</div>
   <div class="row"><button class="pr" id="setx">تم</button></div>
 </dialog>
 
@@ -132,10 +132,10 @@ $("info").value=ld("info")||DEF_INFO;$("ex").value=ld("ex");$("pb").value=ld("pb
 ["info","ex","pb"].forEach(k=>$(k).oninput=()=>sv(k,$(k).value));
 const P=()=>ld("prov")||"claude";
 $("prov").value=P();
-function loadKey(){$("key").value=ld("key_"+P());$("gm").value=(ld("gm")==="gemini-2.5-flash"?"":ld("gm"))||"gemini-3.8-flash";$("gmw").style.display=P()==="gemini"?"block":"none";
+function loadKey(){$("key").value=ld("key_"+P());$("gm").value=ld("gm2")||"gemini-3.5-flash-lite";if(!$("gm").value)$("gm").value="gemini-3.5-flash-lite";$("gmw").style.display=P()==="gemini"?"block":"none";
   $("kn").textContent=P()==="gemini"?"المفتاح المجاني من aistudio.google.com ← Get API key. تنبيه: في الخطة المجانية جوجل ممكن تستخدم المحادثات لتحسين منتجاتها، فاستخدمه بدون بيانات عملاء حقيقية.":"المفتاح من console.anthropic.com ← API Keys. محتاج رصيد مدفوع، مفيش مفتاح Claude مجاني."}
 $("prov").onchange=()=>{sv("prov",$("prov").value);loadKey()};
-$("key").oninput=()=>sv("key_"+P(),$("key").value);$("gm").oninput=()=>sv("gm",$("gm").value);
+$("key").oninput=()=>sv("key_"+P(),$("key").value);$("gm").onchange=()=>sv("gm2",$("gm").value);
 loadKey();
 $("setb").onclick=()=>$("setd").showModal();$("setx").onclick=()=>$("setd").close();
 $("end").onclick=()=>$("endd").showModal();$("endx").onclick=()=>$("endd").close();
@@ -159,7 +159,7 @@ async function stream(prompt,tier,onText,signal){
   let url,headers,body,m="";
   if(prov==="gemini"){
     key=key.replace(/[^\x21-\x7E]/g,"");
-    m=($("gm").value.trim()||"gemini-3.8-flash").replace(/[^A-Za-z0-9._-]/g,"");
+    m=($("gm").value.trim()||"gemini-3.5-flash-lite").replace(/[^A-Za-z0-9._-]/g,"");
     url="https://generativelanguage.googleapis.com/v1beta/models/"+m+":streamGenerateContent?alt=sse&key="+encodeURIComponent(key);
     headers={"Content-Type":"application/json"};
     body={contents:[{role:"user",parts:[{text:prompt}]}]};
@@ -198,7 +198,7 @@ function errMsg(e){
   if(e.status===401||e.status===403||/api key|api_key|authentication|permission/i.test(e.message)){$("setd").showModal();return "المفتاح ناقص أو غلط. الصقه في الإعدادات ⚙️."}
   if(e.status===429||e.status===402||/credit|rate|overloaded/i.test(e.message)){status(false);return "وصلت لحد الاستخدام أو الرصيد خلص. الاستماع شغال، جرّب «رد» بعد شوية."}
   if(e.status){let d=e.message||"";try{const j=JSON.parse(d);d=(j.error&&j.error.message)||d}catch{}
-    return "السيرفر رجّع خطأ ("+e.status+"): "+d.slice(0,160)+((e.status===404||e.status===400)?" — غالبًا اسم النموذج غلط، غيّره من الإعدادات ⚙️.":" — اضغط «رد» تاني.")}
+    return "السيرفر رجّع خطأ ("+e.status+"): "+d.slice(0,160)+((e.status===404||e.status===400)?" — جرّب موديل تاني من الإعدادات ⚙️.":" — اضغط «رد» تاني.")}
   return "مفيش اتصال بالسيرفر ("+(e.message||"شبكة")+"). اتأكد من النت واضغط «رد» تاني."
 }
 
@@ -220,8 +220,18 @@ function base(){
 }
 async function ask(prompt,d){
   if(d._c)d._c.abort();d._c=new AbortController();
-  try{bump();const full=await stream(prompt,"quick",t=>parse(t,d),d._c.signal);if(!full.trim()){q(d,".rep").textContent="الموديل رجّع رد فاضي. اضغط «رد» تاني، ولو اتكرر غيّر اسم الموديل في الإعدادات ⚙️.";return}status(true)}
-  catch(e){const m=errMsg(e);if(m)q(d,".rep").textContent=m}
+  const rp=q(d,".rep");let sec=0;clearInterval(d._t);
+  d._t=setInterval(()=>{sec++;if(rp.textContent==="…"||rp.textContent.startsWith("⏳"))rp.textContent="⏳ بيفكر... "+sec+" ث";if(sec>=45)d._c.abort()},1000);
+  try{
+    bump();const full=await stream(prompt,"quick",t=>parse(t,d),d._c.signal);clearInterval(d._t);
+    if(!full.trim()){rp.textContent="الموديل رجّع رد فاضي. اضغط «رد» تاني، ولو اتكرر غيّر الموديل من الإعدادات ⚙️.";return}
+    if(rp.textContent==="…"||rp.textContent.startsWith("⏳"))rp.textContent=full.replace(/[*#`]/g,"").trim().slice(0,700);
+    status(true)
+  }catch(e){
+    clearInterval(d._t);
+    if(e.name==="AbortError"&&sec>=45){rp.textContent="الموديل اتأخر أكتر من 45 ثانية. اختار موديل 3.5 Flash-Lite من الإعدادات ⚙️ وجرّب تاني.";return}
+    const m=errMsg(e);if(m)rp.textContent=m
+  }
 }
 function mk(){
   $("emp")&&$("emp").remove();
