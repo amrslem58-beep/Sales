@@ -11,45 +11,57 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 <title>مساعد المبيعات</title>
 <style>
-:root{--bg:#EEF1F6;--card:#fff;--ink:#16202E;--mut:#5B6B7F;--ac:#3949D6;--acx:#fff;--bd:#D9DFE8;--hot:#D64545;--ok:#1E8E5A;color-scheme:light dark}
-@media (prefers-color-scheme:dark){:root{--bg:#0F1620;--card:#172231;--ink:#E6ECF3;--mut:#91A1B5;--ac:#8EA2FF;--acx:#0F1620;--bd:#26364A;--hot:#FF7A7A;--ok:#4FD39A}}
+:root{--bg:#F3F5F9;--card:#fff;--ink:#162033;--mut:#667389;--ac:#4458E8;--acx:#fff;--bd:#DEE3EC;--soft:#EDF0F7;--hot:#E04B4B;--ok:#1E9E66;color-scheme:light dark}
+@media (prefers-color-scheme:dark){:root{--bg:#0B111A;--card:#141D2B;--ink:#E8EEF6;--mut:#8D9CB1;--ac:#7C92FF;--acx:#0B111A;--bd:#243349;--soft:#1B2738;--hot:#FF7A7A;--ok:#4FD39A}}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;margin:0}
 body{background:var(--bg);color:var(--ink);font:16px/1.7 Tajawal,"Segoe UI",Tahoma,sans-serif;display:flex;flex-direction:column;max-width:680px;margin:auto}
-header{display:flex;align-items:center;gap:8px;padding:calc(env(safe-area-inset-top,0px) + 10px) 14px 6px}
-header h1{font-size:18px;margin:0;flex:1}
-.pill{font-size:12px;color:var(--mut);background:var(--card);border:1px solid var(--bd);border-radius:999px;padding:1px 10px}
-.pill.bad{color:var(--hot);border-color:var(--hot)}
-.ib{background:none;border:0;font-size:20px;color:var(--ink);padding:4px 8px;cursor:pointer}
-main{flex:1;overflow:auto;padding:4px 14px 12px}
-.live{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:10px 12px;max-height:26vh;overflow:auto;min-height:56px}
+svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+header{display:flex;align-items:center;gap:8px;padding:calc(env(safe-area-inset-top,0px) + 10px) 14px 2px}
+header h1{font-size:17px;margin:0;flex:1}
+.ib{width:40px;height:40px;border-radius:12px;border:1px solid var(--bd);background:var(--card);color:var(--ink);display:grid;place-items:center;cursor:pointer;padding:0}
+.meta{display:flex;gap:6px;padding:4px 14px 8px}
+.pill{font-size:12px;color:var(--mut);background:var(--soft);border-radius:999px;padding:0 10px;display:flex;align-items:center;gap:6px}
+.pill:empty{display:none}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok)}
+.pill.bad{color:var(--hot)}.pill.bad .dot{background:var(--hot)}
+main{flex:1;overflow:auto;padding:0 14px 14px}
+.lbl{font-size:12px;color:var(--mut);margin:4px 2px}
+.live{background:var(--soft);border-radius:12px;padding:8px 12px;max-height:14vh;overflow:auto;font-size:14.5px;line-height:1.6;min-height:40px}
 .live .p{color:var(--mut)}
 .empty{color:var(--mut);font-size:14px;text-align:center;padding:26px 8px}
-.rc{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px;margin-top:10px}
-.tags{display:flex;gap:6px;flex-wrap:wrap}
-.tag{font-size:12.5px;color:var(--mut);border:1px solid var(--bd);border-radius:999px;padding:0 10px}
-.tag:empty{display:none}
-.rep{font-size:20px;font-weight:700;line-height:1.75;margin:8px 0;white-space:pre-wrap}
-.seg{display:flex;border:1px solid var(--bd);border-radius:10px;overflow:hidden}
-.seg button{flex:1;border:0;background:none;color:var(--ink);font:inherit;font-size:14px;padding:7px 4px;cursor:pointer;border-inline-start:1px solid var(--bd)}
-.seg button:first-child{border-inline-start:0}
-.acts{display:flex;gap:6px;margin-top:8px;align-items:center}
-.acts button{background:none;border:1px solid var(--bd);border-radius:10px;color:var(--ink);font:inherit;padding:4px 12px;cursor:pointer}
-.acts .sp{flex:1}
-.acts .on{background:var(--ac);color:var(--acx);border-color:var(--ac)}
+.rc{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:12px;margin-top:10px}
+.rc:first-child{position:sticky;top:0;z-index:2;box-shadow:0 8px 20px rgba(0,0,0,.2)}
+.top{display:flex;align-items:center;gap:6px}
+.top b{font-size:13px;color:var(--mut);font-weight:500;flex:1}
+.top button{width:34px;height:34px;border-radius:10px;border:1px solid var(--bd);background:none;color:var(--mut);display:grid;place-items:center;cursor:pointer;padding:0}
+.top svg{width:17px;height:17px}
+.top .on{background:var(--ac);color:var(--acx);border-color:var(--ac)}
+.read{display:flex;gap:6px;margin:8px 0;background:var(--soft);border-radius:12px;padding:6px}
+.cell{flex:1;min-width:0;text-align:center}
+.cell small{display:block;font-size:11px;color:var(--mut);line-height:1.4}
+.cell b{display:block;font-size:13px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cell b:empty::before{content:"—";opacity:.4}
+.rep{font-size:19px;font-weight:600;line-height:1.8;white-space:pre-wrap;max-height:32vh;overflow:auto;border-inline-start:4px solid var(--ac);padding-inline-start:10px;margin:6px 0 10px}
+.seg{display:flex;gap:6px}
+.seg button{flex:1;border:1px solid var(--bd);background:none;color:var(--ink);font:inherit;font-size:14px;padding:6px 4px;border-radius:999px;cursor:pointer}
 .rc details{margin-top:8px;font-size:14px;color:var(--mut)}
-.rc summary{cursor:pointer}
+.rc summary{cursor:pointer;padding:2px 0}
 .rc details div{margin-top:4px}
+.rc:not(:first-child){cursor:pointer}
+.rc:not(:first-child):not(.open) :is(.read,.seg,details,.top){display:none}
+.rc:not(:first-child):not(.open) .rep{font-size:15px;max-height:none;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:0}
 .dock{padding:8px 14px calc(env(safe-area-inset-bottom,0px) + 10px);background:var(--bg);border-top:1px solid var(--bd)}
-.in{display:flex;background:var(--card);border:1px solid var(--bd);border-radius:12px;overflow:hidden}
+.in{display:flex;align-items:center;background:var(--card);border:1px solid var(--bd);border-radius:14px;overflow:hidden}
 .in input{flex:1;border:0;background:none;color:var(--ink);font:inherit;padding:10px 12px;min-width:0}
-.in button{border:0;background:none;color:var(--ac);font-size:20px;padding:0 14px;cursor:pointer}
+.in button{border:0;background:none;color:var(--ac);padding:0 14px;height:44px;cursor:pointer}
 .main{display:flex;gap:8px;margin-top:8px}
-.main button{font:inherit;font-size:18px;font-weight:700;border-radius:14px;border:0;padding:14px;cursor:pointer}
+.main button{font:inherit;font-size:16px;font-weight:700;border-radius:16px;border:0;height:56px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
 #mic{flex:1;background:var(--card);color:var(--ink);border:1px solid var(--bd)}
 #mic.on{background:var(--hot);color:#fff;border-color:var(--hot);animation:pl 1.6s infinite}
-#go{flex:1.4;background:var(--ac);color:var(--acx)}
-#end{flex:0 0 auto;background:none;border:1px solid var(--bd);color:var(--ink);font-size:15px;padding:14px 12px}
+#go{flex:1.6;background:var(--ac);color:var(--acx);font-size:18px}
+#cls{flex:0 0 76px;background:var(--ok);color:var(--acx);font-size:15px}
+#end{flex:0 0 60px;background:none;border:1px solid var(--bd);color:var(--mut);font-size:14px;font-weight:500}
 @keyframes pl{50%{opacity:.72}}
 @media (prefers-reduced-motion:reduce){#mic.on{animation:none}}
 dialog{border:0;border-radius:16px;background:var(--card);color:var(--ink);width:min(92vw,560px);max-height:88vh;padding:14px}
@@ -66,24 +78,41 @@ dialog textarea{min-height:120px;resize:vertical}
 .row .pr{background:var(--ac);color:var(--acx);border-color:var(--ac);font-weight:700}
 #sum{white-space:pre-wrap;font-size:14.5px;color:var(--mut);margin-top:8px}
 .note{font-size:13px;color:var(--mut)}
+.two{display:flex;gap:8px}.two>div{flex:1}
+.tpl{background:var(--soft);border-radius:12px;padding:10px;margin-top:8px}
+.tpl h3{margin:0 0 4px;font-size:13px;color:var(--mut);font-weight:500}
+.tpl p{margin:0 0 8px;font-size:16px;line-height:1.8;white-space:pre-wrap}
+.cp{border:1px solid var(--bd);background:var(--card);color:var(--ink);font:inherit;font-size:14px;border-radius:999px;padding:4px 16px;cursor:pointer}
 </style>
 </head>
 <body>
 <header>
-  <h1>🎧 مساعد المبيعات</h1>
-  <span class="pill" id="st">🟢 متاح</span><span class="pill" id="cn"></span><span class="pill" id="ver">v1.6</span>
-  <button class="ib" id="setb" aria-label="الإعدادات">⚙️</button>
+  <h1>مساعد المبيعات</h1>
+  <button class="ib" id="scb" aria-label="السكربتات"></button><button class="ib" id="setb" aria-label="الإعدادات"></button>
 </header>
+<div class="meta"><span class="pill" id="st"><i class="dot"></i>متاح</span><span class="pill" id="cn"></span><span class="pill" id="ver">v1.8</span></div>
 
 <main>
+  <div class="lbl">كلام العميل</div>
   <div class="live" id="live"></div>
-  <div id="list"><div class="empty" id="emp">اضغط 🎤 واسمع العميل، وفي أي وقت اضغط «رد» تاخد اقتراح.</div></div>
+  <div id="list"><div class="empty" id="emp">اضغط «استماع» واسمع العميل، وفي أي وقت اضغط «رد» تاخد اقتراح.</div></div>
 </main>
 
 <div class="dock">
-  <div class="in"><input id="typed" placeholder="اكتب كلام العميل أو الصق هنا" enterkeyhint="send"><button id="add" aria-label="إضافة">➕</button></div>
-  <div class="main"><button id="mic">🎤 استماع</button><button id="go">💬 رد</button><button id="end">إنهاء</button></div>
+  <div class="in"><input id="typed" placeholder="اكتب كلام العميل أو الصق هنا" enterkeyhint="send"><button id="add" aria-label="إضافة"></button></div>
+  <div class="main"><button id="mic"></button><button id="go"></button><button id="cls"></button><button id="end">إنهاء</button></div>
 </div>
+
+<dialog id="scd">
+  <h2>السكربتات</h2>
+  <div class="two"><div><label for="sc_co">اسم الشركة</label><input id="sc_co" placeholder="مثال: نبراس"></div><div><label for="sc_me">اسمك</label><input id="sc_me"></div></div>
+  <label for="sc_my">سكربت الشركة (الصقه هنا)</label><textarea id="sc_my" style="min-height:90px"></textarea>
+  <div class="row"><button id="sc_cp">نسخ سكربت الشركة</button></div>
+  <label>سكربتات جاهزة (بتتعبّى باسم الشركة واسمك)</label>
+  <div class="chips" id="sc_tabs"></div>
+  <div id="sc_list"></div>
+  <div class="row"><button class="pr" id="scx">إغلاق</button></div>
+</dialog>
 
 <dialog id="endd">
   <h2>إنهاء المكالمة</h2>
@@ -100,18 +129,23 @@ dialog textarea{min-height:120px;resize:vertical}
   <label for="info">معلومات الشركة (الخدمات والأسعار ونقاط القوة والاعتراضات)</label><textarea id="info"></textarea>
   <label for="ex">ردود ومكالمات ناجحة سابقة (الأداة بتقلّد أسلوبها)</label><textarea id="ex"></textarea>
   <label for="pb">🧠 دفتر خبرتي (بيتحدّث بعد كل مكالمة، وتقدر تعدّله)</label><textarea id="pb"></textarea>
+  <label for="gl">📚 قاموس المصطلحات (كل سطر: الصح = الأشكال الغلط مفصولة بـ ،)</label><textarea id="gl" style="min-height:150px"></textarea>
   <label for="prov">مزود الذكاء الاصطناعي</label>
   <select id="prov" style="width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:9px"><option value="claude">Claude (بيتدفع حسب الاستخدام)</option><option value="gemini">Gemini (فيه خطة مجانية)</option></select>
   <label for="key">مفتاح الـ API (بيتحفظ على جهازك بس)</label><input id="key" type="password" autocomplete="off" placeholder="الصق المفتاح هنا">
   <div id="gmw"><label for="gm">نموذج Gemini</label><select id="gm" style="width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:9px"><option value="gemini-3.5-flash-lite">⚡ 3.5 Flash-Lite (الأسرع، موصى به للمكالمات)</option><option value="gemini-3.8-flash">🧠 3.8 Flash (أذكى وأبطأ)</option><option value="gemini-3.6-flash">3.6 Flash (وسط)</option><option value="gemini-2.5-flash-lite">2.5 Flash-Lite (احتياطي)</option></select></div>
   <div class="note" id="kn" style="margin-top:6px"></div>
   <div class="note" style="margin-top:8px">المفتاح وكل الإعدادات محفوظة على جهازك بس، وما بتتبعتش غير لمزود الذكاء الاصطناعي اللي اخترته. ما تكتبش أسماء عملاء، وخد موافقة الشركة قبل الاستخدام مع عملاء حقيقيين.</div>
-  <div class="note" style="margin-top:8px;text-align:center">رقم الإصدار: 1.6</div>
+  <div class="note" style="margin-top:8px;text-align:center">رقم الإصدار: 1.8</div>
   <div class="row"><button class="pr" id="setx">تم</button></div>
 </dialog>
 
 <script>
 const $=i=>document.getElementById(i);
+const S=p=>'<svg viewBox="0 0 24 24" aria-hidden="true">'+p+'</svg>';
+const I={mic:S('<rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/>'),stop:S('<rect x="6" y="6" width="12" height="12" rx="2"/>'),chat:S('<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>'),send:S('<path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/>'),doc:S('<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/>'),set:S('<path d="M4 6h10M18 6h2M4 12h2M10 12h10M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="18" cy="18" r="2"/>'),up:S('<path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/>'),dn:S('<path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/>'),lock:S('<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>'),tr:S('<path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/>')};
+$("go").innerHTML=I.chat+"<span>رد</span>";$("cls").innerHTML=I.lock+"<span>قفل</span>";$("add").innerHTML=I.send;$("scb").innerHTML=I.doc;$("setb").innerHTML=I.set;
+
 const ld=k=>{try{return localStorage.getItem(k)||""}catch{return ""}};
 const sv=(k,v)=>{try{localStorage.setItem(k,v)}catch{}};
 const DEF_INFO=`شركة "نبراس" للتسويق الرقمي - الرياض (بيانات تجريبية، بدّلها ببيانات شركتك)
@@ -130,6 +164,22 @@ const DEF_INFO=`شركة "نبراس" للتسويق الرقمي - الرياض
 - "مو وقته": اسأله إيه اللي يخليه يأجل`;
 $("info").value=ld("info")||DEF_INFO;$("ex").value=ld("ex");$("pb").value=ld("pb");
 ["info","ex","pb"].forEach(k=>$(k).oninput=()=>sv(k,$(k).value));
+const DEF_GL=`SEO = سيو، سي يو، اس اي او، إس إي أو، S E O
+CTR = سي تي ار، سي تي آر
+CPC = سي بي سي
+CRM = سي ار ام، سي آر إم
+KPI = كي بي اي، كاي بي آي
+ROI = ار او اي، آر أو آي
+CTA = سي تي ايه
+Landing Page = لاندنج بيج، لاند بيج، لاندينج بيدج
+Backlinks = باك لينك، باكلينكس
+Google Ads = جوجل ادز، جوجل أدز
+Meta Ads = ميتا ادز
+UX = يو اكس`;
+let GR=[];
+function buildGl(){GR=[];$("gl").value.split("\n").forEach(l=>{const m=l.split("=");if(m.length<2)return;const c=m[0].trim();m.slice(1).join("=").split(/[،,]/).map(x=>x.trim()).filter(Boolean).forEach(v=>{try{GR.push([new RegExp("(^|[^\\p{L}\\p{N}])"+v.replace(/[.*+?^${}()|[\]\\]/g,"\\$&").replace(/\s+/g,"\\s*")+"(?![\\p{L}\\p{N}])","giu"),c])}catch{}})})}
+const fixT=t=>GR.reduce((a,[r,c])=>a.replace(r,(m,p)=>p+c),t);
+$("gl").value=ld("gl")||DEF_GL;$("gl").oninput=()=>{sv("gl",$("gl").value);buildGl()};buildGl();
 const P=()=>ld("prov")||"claude";
 $("prov").value=P();
 function loadKey(){$("key").value=ld("key_"+P());$("gm").value=ld("gm2")||"gemini-3.5-flash-lite";if(!$("gm").value)$("gm").value="gemini-3.5-flash-lite";$("gmw").style.display=P()==="gemini"?"block":"none";
@@ -146,7 +196,7 @@ const today=()=>new Date().toISOString().slice(0,10);
 function cnt(){try{const o=JSON.parse(ld("cnt")||"{}");return o.d===today()?o.n:0}catch{return 0}}
 function bump(){sv("cnt",JSON.stringify({d:today(),n:cnt()+1}));showCnt()}
 function showCnt(){$("cn").textContent="النهاردة: "+cnt()}
-function status(ok){const t=new Date();$("st").textContent=ok?"🟢 متاح":"🔴 الرصيد/الحد خلص "+t.getHours()+":"+("0"+t.getMinutes()).slice(-2);$("st").classList.toggle("bad",!ok)}
+function status(ok){const t=new Date();$("st").innerHTML='<i class="dot"></i>'+(ok?"متاح":"الرصيد/الحد خلص "+t.getHours()+":"+("0"+t.getMinutes()).slice(-2));$("st").classList.toggle("bad",!ok)}
 showCnt();
 const esc=s=>{const d=document.createElement("div");d.textContent=s;return d.innerHTML};
 function render(){const l=$("live");l.innerHTML=esc(tr.join(" "))+(pend?`<span class="p"> ${esc(pend)}</span>`:"");if(!tr.length&&!pend)l.innerHTML='<span class="p">الكلام اللي بتسمعه هيظهر هنا…</span>';l.scrollTop=l.scrollHeight}
@@ -204,7 +254,7 @@ function errMsg(e){
 
 /* الأوامر */
 const KEYS={"الرد":"rep","النبرة":"t1","المرحلة":"t2","الاعتراض":"t3","القوة":"str","الأسئلة":"qs","الخطوة":"nxt"};
-const ICON={str:"💪 ",qs:"❓ ",nxt:"➡️ "};
+const ICON={str:"نقطة قوة: ",qs:"اسأله: ",nxt:"الخطوة: "};
 const q=(d,s)=>d.querySelector(s);
 function parse(txt,d){
   let cur=null;const o={};
@@ -214,7 +264,7 @@ function parse(txt,d){
   if(!o.rep&&txt.trim()&&!/^\s*الرد\s*[:：]/m.test(txt.replace(/[*#`]/g,"")))q(d,".rep").textContent=txt.replace(/[*#`]/g,"").trim();
 }
 function base(){
-  return "انت مدرب مبيعات سعودي خبرتك 15 سنة في التسويق الرقمي، بتهمس في ودن المندوب وقت المكالمة. قواعدك: افهم اللي ورا كلام العميل (خوف، مقارنة، ميزانية، مجاملة للهروب). اعترف بكلامه قبل ما تردّ ولا تجادله. الرد زي كلام إنسان: جمل قصيرة بلهجة بيضاء قريبة من الخليجية، بدون عبارات رسمية جاهزة. رد واحد متماسك ينتهي بسؤال يفتح الحوار. لو المعلومة مش في بيانات الشركة قل خلني أراجع مع الفريق وأرجعلك ولا تألف. لا تكرر ردودك السابقة. استخدم معلومات الشركة فقط ولا تألف أسعار.\n\nمعلومات الشركة:\n"+$("info").value
+  return "انت مدرب مبيعات سعودي خبرتك 15 سنة في التسويق الرقمي، بتهمس في ودن المندوب وقت المكالمة. قواعدك: افهم اللي ورا كلام العميل (خوف، مقارنة، ميزانية، مجاملة للهروب). اعترف بكلامه قبل ما تردّ ولا تجادله. الرد زي كلام إنسان: جمل قصيرة بلهجة بيضاء قريبة من الخليجية، بدون عبارات رسمية جاهزة. رد واحد متماسك ينتهي بسؤال يفتح الحوار. لو المعلومة مش في بيانات الشركة قل خلني أراجع مع الفريق وأرجعلك ولا تألف. لا تكرر ردودك السابقة. استخدم معلومات الشركة فقط ولا تألف أسعار. كلام العميل متحوّل من صوت لنص تلقائيًا وفيه أخطاء سمع، خصوصًا المصطلحات الإنجليزية بحروف عربي (سيو أو سي يو = SEO تحسين محركات البحث، وليس CEO المدير التنفيذي إلا لو العميل يقصد شخص أو منصب بوضوح). فسّر المصطلح من سياق الكلام وميّز بين المتشابهات، ولا تقل إنك مش فاهم لو السياق واضح. اعتمد على قاموس المصطلحات تحت.\n\nمعلومات الشركة:\n"+$("info").value+"\n\nقاموس المصطلحات (الصح = أشكال ممكن تتكتب غلط):\n"+$("gl").value
    +($("ex").value.trim()?"\n\nأمثلة ردود ناجحة قلّد روحها وأسلوبها ولا تنسخها:\n"+$("ex").value:"")
    +($("pb").value.trim()?"\n\nدفتر خبرة المندوب (دروس حقيقية من مكالماته السابقة، التزم بها: كرر اللي نجح وتجنب اللي فشل، وابدأ بنقاط القوة اللي خلّت العملاء يلتفتوا):\n"+$("pb").value:"");
 }
@@ -236,13 +286,14 @@ async function ask(prompt,d){
 function mk(){
   $("emp")&&$("emp").remove();
   const d=document.createElement("div");d.className="rc";
-  d.innerHTML=`<div class="tags"><span class="tag t1"></span><span class="tag t2"></span><span class="tag t3"></span></div>
+  d.innerHTML=`<div class="top"><b>الرد المقترح</b><button class="g" aria-label="التفت">${I.up}</button><button class="b" aria-label="ما نفعش">${I.dn}</button><button class="x" aria-label="حذف">${I.tr}</button></div>
+  <div class="read"><div class="cell"><small>النبرة</small><b class="t1"></b></div><div class="cell"><small>المرحلة</small><b class="t2"></b></div><div class="cell"><small>الاعتراض</small><b class="t3"></b></div></div>
   <div class="rep">…</div>
-  <div class="seg"><button data-m="أقصر">✂️ أقصر</button><button data-m="أدفى وأقرب للقلب">🤝 أدفى</button><button data-m="أقوى وأكثر حسمًا">💥 أقوى</button></div>
-  <div class="acts"><button class="g">👍 التفت</button><button class="b">👎</button><span class="sp"></span><button class="x" aria-label="حذف">🗑</button></div>
-  <details><summary>💡 نقاط القوة والأسئلة والخطوة</summary><div class="str"></div><div class="qs"></div><div class="nxt"></div></details>`;
+  <div class="seg"><button data-m="أقصر">أقصر</button><button data-m="أدفى وأقرب للقلب">أدفأ</button><button data-m="أقوى وأكثر حسمًا">أقوى</button></div>
+  <details><summary>المزيد: نقاط القوة والأسئلة</summary><div class="str"></div><div class="qs"></div><div class="nxt"></div></details>`;
+  document.querySelector("main").scrollTop=0;
   $("list").insertBefore(d,$("list").firstChild);
-  d.onclick=e=>{const b=e.target.closest("button");if(!b)return;
+  d.onclick=e=>{const b=e.target.closest("button");if(!b){if(d!==d.parentNode.firstElementChild)d.classList.toggle("open");return}
     if(b.dataset.m){const r=q(d,".rep").textContent;if(r&&r!=="…")ask(base()+"\n\nالرد الحالي: "+r+"\nأعد كتابته "+b.dataset.m+" مع نفس المعنى وبنفس اللهجة. اكتب سطر واحد يبدأ بـ الرد:",d)}
     else if(b.classList.contains("g")||b.classList.contains("b")){rate(d,b.classList.contains("g"),b)}
     else if(b.classList.contains("x")){if(d._c)d._c.abort();d.remove()}};
@@ -265,7 +316,15 @@ function respond(){
   "\n\nاكتب بالشكل ده بالضبط، كل بند في سطر يبدأ باسمه، والرد أولًا:\nالرد: الجملة اللي يقولها المندوب بالحرف، سطرين بالكتير\nالنبرة: نبرة العميل في كلمة أو اتنين\nالمرحلة: مرحلة المكالمة (تعارف/اكتشاف/عرض/اعتراض/قفل)\nالاعتراض: نوع الاعتراض أو نيّة العميل الحقيقية\nالقوة: نقطة قوة مناسبة من الشركة\nالأسئلة: سؤالين اكتشاف ذكيين بينهم |\nالخطوة: الخطوة التالية للمندوب",d);
 }
 $("go").onclick=respond;
-const add=()=>{const v=$("typed").value.trim();if(!v)return;tr.push(v);$("typed").value="";render()};
+function closeDeal(){
+  if(!tr.length&&!pend.trim())return;
+  const all=(tr.join("\n")+(pend?"\n"+pend:"")).slice(-12000);
+  const d=mk();d._n="";q(d,".top b").textContent="قفل المكالمة";
+  ask(base()+"\n\nالحوار كله لحد دلوقتي:\n"+all+"\n\nالمندوب حاسس إن المكالمة وصلت لمرحلة القفل. اقرا إشارات العميل (اهتمامه، أسئلته عن السعر والبدء، آخر تردد). اقفل بهدوء من غير ضغط: افترض إن القرار اتاخد وانقله لخطوة التنفيذ، أو اعرض خيارين كلهم يؤدوا للموافقة. لو العميل لسه مش جاهز، خد التزام صغير بموعد محدد بدل ما تضغط.\n\nاكتب بالشكل ده بالضبط، كل بند في سطر يبدأ باسمه:\nالرد: جملة قفل واحدة يقولها المندوب بالحرف، سطرين بالكتير\nالنبرة: جاهزية العميل في كلمة أو اتنين\nالمرحلة: قفل\nالاعتراض: آخر تردد محتمل\nالقوة: أقوى سبب يخلّي العميل يقرر الحين\nالأسئلة: صيغة قفل بديلة | سؤال يكشف آخر تردد\nالخطوة: خطوة التنفيذ بموعد محدد (إرسال العرض أو الدفع أو بدء الشغل)",d);
+}
+$("cls").onclick=closeDeal;
+
+const add=()=>{const v=$("typed").value.trim();if(!v)return;tr.push(fixT(v));$("typed").value="";render()};
 $("add").onclick=add;$("typed").onkeydown=e=>{if(e.key==="Enter")add()};
 
 /* إنهاء المكالمة: تلخيص + تعلّم بزرار واحد */
@@ -286,21 +345,37 @@ $("learn").onclick=async()=>{
 };
 $("fresh").onclick=()=>{
   if(!confirm("هيمسح الكلام والردود. الدفتر والإعدادات هتفضل محفوظة. تكمل؟"))return;
-  tr=[];pend="";prev=0;log=[];$("list").innerHTML='<div class="empty" id="emp">اضغط 🎤 واسمع العميل، وفي أي وقت اضغط «رد» تاخد اقتراح.</div>';$("sum").textContent="";render();$("endd").close();
+  tr=[];pend="";prev=0;log=[];$("list").innerHTML='<div class="empty" id="emp">اضغط «استماع» واسمع العميل، وفي أي وقت اضغط «رد» تاخد اقتراح.</div>';$("sum").textContent="";render();$("endd").close();
 };
 
 /* الاستماع المتواصل */
 const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let rec=null,want=false;
-function micUI(on){$("mic").classList.toggle("on",on);$("mic").textContent=on?"⏹ إيقاف":"🎤 استماع"}
+function micUI(on){$("mic").classList.toggle("on",on);$("mic").innerHTML=on?I.stop+"<span>إيقاف</span>":I.mic+"<span>استماع</span>"}micUI(false);
 $("mic").onclick=()=>{
   if(!SR){$("live").innerHTML='<span class="p">المتصفح ده مش بيدعم الاستماع. استخدم ميكروفون الكيبورد في خانة الكتابة، أو افتح الصفحة في كروم/سفاري.</span>';return}
   if(want){want=false;try{rec.stop()}catch{}micUI(false);return}
   rec=new SR();rec.lang="ar-SA";rec.continuous=true;rec.interimResults=true;
-  rec.onresult=e=>{let p="";for(let i=e.resultIndex;i<e.results.length;i++){const r=e.results[i];if(r.isFinal){const t=r[0].transcript.trim();if(t)tr.push(t)}else p+=r[0].transcript}pend=p;render()};
+  rec.onresult=e=>{let p="";for(let i=e.resultIndex;i<e.results.length;i++){const r=e.results[i];if(r.isFinal){const t=r[0].transcript.trim();if(t)tr.push(fixT(t))}else p+=r[0].transcript}pend=fixT(p);render()};
   rec.onerror=e=>{if(e.error==="not-allowed"||e.error==="service-not-allowed"){want=false;micUI(false);$("live").innerHTML='<span class="p">المايك مش مسموح. فعّله من إعدادات المتصفح للموقع ده، وفي الآيفون فعّل الإملاء من الإعدادات ← عام ← لوحة المفاتيح.</span>'}};
   rec.onend=()=>{if(want){try{rec.start()}catch{}}};
   try{rec.start();want=true;micUI(true)}catch{}
 };
+
+/* السكربتات */
+const TPL={"افتتاح":[["افتتاح مباشر","السلام عليكم، معك {اسمي} من {الشركة}. أتواصل معك بخصوص تنمية مبيعات نشاطك أونلاين، عندك دقيقتين أشرح لك الفكرة؟"],["افتتاح بسؤال","السلام عليكم، معك {اسمي} من {الشركة}. سؤال سريع: تجيك طلبات من السوشيال ميديا حاليًا، ولا أغلب شغلك من المعارف؟"],["افتتاح قصير جدًا","مساك الله بالخير، {اسمي} من {الشركة}. تسمح لي بنص دقيقة وأقول لك ليش اتصلت؟"],["عميل تواصل قبل","السلام عليكم، معك {اسمي} من {الشركة}. تواصلت معنا قبل بخصوص التسويق، حبيت أتابع معك وأشوف وين وصلت."]],
+"اعتراضات":[["غالي","أفهمك، والسعر مهم. خلني أسألك: كم يعني لك عميل واحد جديد؟ الباقة تتغطى بعميل أو اثنين، ونقدر نبدأ بباقة أصغر نجرّب فيها."],["هفكر","طبيعي تفكر. بس عشان أفيدك صح، وش النقطة اللي تبي تفكر فيها؟ السعر ولا النتائج؟ أوضحها لك الحين."],["عندي شركة","ممتاز إن عندك تسويق. وش اللي ناقصك معهم؟ في {الشركة} ما نطلب منك تلغي، نقدر نبدأ بتجربة مصغرة ونقارن."],["مو محتاج","أحترم رأيك. بس لو جبنا لك طلبات إضافية بدون ما تغيّر شي في شغلك، تستاهل دقيقتين؟"],["ابعتلي واتساب","أبشر، أرسله لك الحين. عشان يجي مناسب لك، وش أهم شي تبي تشوفه فيه؟"],["مو وقته","تمام، وش اللي يخليه مو وقته؟ ميزانية ولا ضغط شغل؟ وأقدر أرجع لك في وقت يناسبك، متى؟"],["جرّبت وما نفع","معك حق تتحفظ. وش اللي صار بالضبط في تجربتك السابقة؟ عشان أوضح لك كيف نشتغل في {الشركة} بشكل مختلف."]],
+"قفل":[["قفل مباشر","ممتاز، نبدأ بالباقة اللي ناسبتك؟ أرسل لك التفاصيل على الواتساب الحين وننطلق هذا الأسبوع."],["قفل بخيارين","تفضل نبدأ بالباقة الأساسية ولا المتكاملة؟ وأي يوم يناسبك نبدأ؟"],["قفل بتجربة","نبدأ بشهرين تجربة مع تقرير أسبوعي بالأرقام، وإذا ما عجبتك النتائج تقدر توقف."]],
+"متابعة":[["بعد المكالمة","السلام عليكم، {اسمي} من {الشركة}. شكرًا على وقتك اليوم، أرسلت لك ملخص اللي اتفقنا عليه. متى نكمل؟"],["بعد يومين","السلام عليكم، {اسمي} من {الشركة}. حبيت أتأكد وصلك العرض، وأجاوبك على أي سؤال عندك."],["آخر محاولة","مساك الله بالخير، آخر متابعة مني. لو الوقت مو مناسب أحترم وأرجع لك بعد فترة، وإذا تحب نكمل قل لي."]]};
+let stab="افتتاح";
+const fill=t=>t.replace(/\{الشركة\}/g,$("sc_co").value.trim()||"الشركة").replace(/\{اسمي\}/g,$("sc_me").value.trim()||"[اسمك]");
+function rs(){$("sc_tabs").innerHTML=Object.keys(TPL).map(k=>`<button data-t="${k}" class="${k===stab?"on":""}">${k}</button>`).join("");
+  $("sc_list").innerHTML=TPL[stab].map((x,i)=>`<div class="tpl"><h3>${x[0]}</h3><p>${esc(fill(x[1]))}</p><button class="cp" data-i="${i}">نسخ</button></div>`).join("")}
+async function cpy(t,b){try{await navigator.clipboard.writeText(t)}catch{const a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();try{document.execCommand("copy")}catch{}a.remove()}const o=b.textContent;b.textContent="تم النسخ ✓";setTimeout(()=>b.textContent=o,1200)}
+$("sc_list").onclick=e=>{const b=e.target.closest(".cp");if(b)cpy(fill(TPL[stab][+b.dataset.i][1]),b)};
+$("sc_tabs").onclick=e=>{const b=e.target.closest("button");if(b){stab=b.dataset.t;rs()}};
+$("sc_cp").onclick=e=>{if($("sc_my").value.trim())cpy($("sc_my").value,e.currentTarget)};
+["sc_co","sc_me","sc_my"].forEach(k=>{$(k).value=ld(k);$(k).oninput=()=>{sv(k,$(k).value);rs()}});
+$("scb").onclick=()=>{rs();$("scd").showModal()};$("scx").onclick=()=>$("scd").close();
 if(!$("key").value.trim())setTimeout(()=>$("setd").showModal(),400);
 if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script>
