@@ -131,7 +131,7 @@ $("info").value=ld("info")||DEF_INFO;$("ex").value=ld("ex");$("pb").value=ld("pb
 ["info","ex","pb"].forEach(k=>$(k).oninput=()=>sv(k,$(k).value));
 const P=()=>ld("prov")||"claude";
 $("prov").value=P();
-function loadKey(){$("key").value=ld("key_"+P());$("gm").value=ld("gm")||"gemini-2.5-flash";$("gmw").style.display=P()==="gemini"?"block":"none";
+function loadKey(){$("key").value=ld("key_"+P());$("gm").value=(ld("gm")==="gemini-2.5-flash"?"":ld("gm"))||"gemini-3.8-flash";$("gmw").style.display=P()==="gemini"?"block":"none";
   $("kn").textContent=P()==="gemini"?"المفتاح المجاني من aistudio.google.com ← Get API key. تنبيه: في الخطة المجانية جوجل ممكن تستخدم المحادثات لتحسين منتجاتها، فاستخدمه بدون بيانات عملاء حقيقية.":"المفتاح من console.anthropic.com ← API Keys. محتاج رصيد مدفوع، مفيش مفتاح Claude مجاني."}
 $("prov").onchange=()=>{sv("prov",$("prov").value);loadKey()};
 $("key").oninput=()=>sv("key_"+P(),$("key").value);$("gm").oninput=()=>sv("gm",$("gm").value);
@@ -157,7 +157,7 @@ async function stream(prompt,tier,onText,signal){
   if(!key){const e=new Error("no key");e.status=401;throw e}
   let url,headers,body;
   if(prov==="gemini"){
-    const m=$("gm").value.trim()||"gemini-2.5-flash";
+    const m=$("gm").value.trim()||"gemini-3.8-flash";
     url="https://generativelanguage.googleapis.com/v1beta/models/"+m+":streamGenerateContent?alt=sse";
     headers={"Content-Type":"application/json","x-goog-api-key":key};
     body={contents:[{role:"user",parts:[{text:prompt}]}]};
@@ -185,7 +185,9 @@ function errMsg(e){
   if(e.name==="AbortError")return null;
   if(e.status===401||e.status===403||/api key|api_key|authentication|permission/i.test(e.message)){$("setd").showModal();return "المفتاح ناقص أو غلط. الصقه في الإعدادات ⚙️."}
   if(e.status===429||e.status===402||/credit|rate|overloaded/i.test(e.message)){status(false);return "وصلت لحد الاستخدام أو الرصيد خلص. الاستماع شغال، جرّب «رد» بعد شوية."}
-  return "حصلت مشكلة في الاتصال، اضغط «رد» تاني."
+  if(e.status){let d=e.message||"";try{const j=JSON.parse(d);d=(j.error&&j.error.message)||d}catch{}
+    return "السيرفر رجّع خطأ ("+e.status+"): "+d.slice(0,160)+((e.status===404||e.status===400)?" — غالبًا اسم النموذج غلط، غيّره من الإعدادات ⚙️.":" — اضغط «رد» تاني.")}
+  return "مفيش اتصال بالسيرفر ("+(e.message||"شبكة")+"). اتأكد من النت واضغط «رد» تاني."
 }
 
 /* الأوامر */
