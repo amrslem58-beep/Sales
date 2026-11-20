@@ -71,7 +71,7 @@ dialog textarea{min-height:120px;resize:vertical}
 <body>
 <header>
   <h1>🎧 مساعد المبيعات</h1>
-  <span class="pill" id="st">🟢 متاح</span><span class="pill" id="cn"></span>
+  <span class="pill" id="st">🟢 متاح</span><span class="pill" id="cn"></span><span class="pill" id="ver">v1.3</span>
   <button class="ib" id="setb" aria-label="الإعدادات">⚙️</button>
 </header>
 
@@ -106,6 +106,7 @@ dialog textarea{min-height:120px;resize:vertical}
   <div id="gmw"><label for="gm">اسم نموذج Gemini</label><input id="gm"></div>
   <div class="note" id="kn" style="margin-top:6px"></div>
   <div class="note" style="margin-top:8px">المفتاح وكل الإعدادات محفوظة على جهازك بس، وما بتتبعتش غير لمزود الذكاء الاصطناعي اللي اخترته. ما تكتبش أسماء عملاء، وخد موافقة الشركة قبل الاستخدام مع عملاء حقيقيين.</div>
+  <div class="note" style="margin-top:8px;text-align:center">رقم الإصدار: 1.3</div>
   <div class="row"><button class="pr" id="setx">تم</button></div>
 </dialog>
 
@@ -196,9 +197,10 @@ const ICON={str:"💪 ",qs:"❓ ",nxt:"➡️ "};
 const q=(d,s)=>d.querySelector(s);
 function parse(txt,d){
   let cur=null;const o={};
-  txt.split("\n").forEach(l=>{const m=l.match(/^\s*(الرد|النبرة|المرحلة|الاعتراض|القوة|الأسئلة|الخطوة)\s*[:：]\s*(.*)$/);
+  txt.split("\n").forEach(l=>{l=l.replace(/[*#`]/g,"").replace(/^\s*[-•]\s+/,"");const m=l.match(/^\s*(الرد|النبرة|المرحلة|الاعتراض|القوة|الأسئلة|الخطوة)\s*[:：]\s*(.*)$/);
     if(m){cur=KEYS[m[1]];o[cur]=m[2]}else if(cur&&l.trim())o[cur]+=" "+l.trim()});
   Object.keys(o).forEach(id=>q(d,"."+id).textContent=(ICON[id]||"")+o[id].trim());
+  if(!o.rep&&txt.trim()&&!/^\s*الرد\s*[:：]/m.test(txt.replace(/[*#`]/g,"")))q(d,".rep").textContent=txt.replace(/[*#`]/g,"").trim();
 }
 function base(){
   return "انت مدرب مبيعات سعودي خبرتك 15 سنة في التسويق الرقمي، بتهمس في ودن المندوب وقت المكالمة. قواعدك: افهم اللي ورا كلام العميل (خوف، مقارنة، ميزانية، مجاملة للهروب). اعترف بكلامه قبل ما تردّ ولا تجادله. الرد زي كلام إنسان: جمل قصيرة بلهجة بيضاء قريبة من الخليجية، بدون عبارات رسمية جاهزة. رد واحد متماسك ينتهي بسؤال يفتح الحوار. لو المعلومة مش في بيانات الشركة قل خلني أراجع مع الفريق وأرجعلك ولا تألف. لا تكرر ردودك السابقة. استخدم معلومات الشركة فقط ولا تألف أسعار.\n\nمعلومات الشركة:\n"+$("info").value
@@ -207,7 +209,7 @@ function base(){
 }
 async function ask(prompt,d){
   if(d._c)d._c.abort();d._c=new AbortController();
-  try{bump();await stream(prompt,"quick",t=>parse(t,d),d._c.signal);status(true)}
+  try{bump();const full=await stream(prompt,"quick",t=>parse(t,d),d._c.signal);if(!full.trim()){q(d,".rep").textContent="الموديل رجّع رد فاضي. اضغط «رد» تاني، ولو اتكرر غيّر اسم الموديل في الإعدادات ⚙️.";return}status(true)}
   catch(e){const m=errMsg(e);if(m)q(d,".rep").textContent=m}
 }
 function mk(){
